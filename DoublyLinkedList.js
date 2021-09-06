@@ -34,23 +34,55 @@ class DoublyLinkedList {
 
   pop() {
     if (!this.head) return undefined;
+    const endNode = this.tail;
     if (this.length === 1) {
       this.head = null;
       this.tail = null;
     } else {
-      const endNode = this.tail;
       this.tail = endNode.prev;
-      endNode.prev = null;
       this.tail.next = null;
+      endNode.prev = null;
     }
 
     this.length--;
 
+    return endNode;
+  }
+
+  shift() {
+    if (this.length === 0) return undefined;
+    const removedHead = this.head;
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      this.head = removedHead.next;
+      this.head.prev = null;
+    }
+    removedHead.next = null;
+    this.length--;
+    return removedHead;
+  }
+
+  unshift(val) {
+    const newNode = new Node(val);
+    if (this.head === null) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      this.head.prev = newNode;
+      newNode.next = this.head;
+      this.head = newNode;
+    }
+    this.length++;
     return this;
   }
 }
 
 const dblLinkedList = new DoublyLinkedList();
 
-dblLinkedList.push("one");
-console.log(dblLinkedList.push("two"));
+// dblLinkedList.push("one");
+dblLinkedList.push("two");
+dblLinkedList.push("three");
+console.log(dblLinkedList.unshift("one"));
+// console.log(dblLinkedList);
