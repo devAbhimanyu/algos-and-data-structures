@@ -107,6 +107,43 @@ class DoublyLinkedList {
     }
     return false;
   }
+
+  insert(ind, val) {
+    if (ind < 0 || ind > this.length) return false;
+    if (ind === 0) return !!this.unshift(val);
+    if (ind === this.length - 1) return !!this.push(val);
+
+    const newNode = new Node(val);
+    const nextNode = this.get(ind);
+    const prevNode = nextNode.prev;
+
+    prevNode.next = newNode;
+    newNode.prev = prevNode;
+    nextNode.prev = newNode;
+    newNode.next = nextNode;
+
+    this.length++;
+    return true;
+  }
+
+  remove(ind) {
+    if (ind < 0 && ind >= this.length) return null;
+    if (ind === 0) return this.shift();
+    if (ind === this.length - 1) return this.pop();
+
+    const removedNode = this.get(ind);
+    const before = removedNode.prev;
+    const after = removedNode.next;
+
+    before.next = after;
+    after.prev = before;
+
+    removedNode.next = null;
+    removedNode.prev = null;
+
+    this.length--;
+    return removedNode;
+  }
 }
 
 const dblLinkedList = new DoublyLinkedList();
@@ -120,5 +157,5 @@ dblLinkedList.push("6");
 dblLinkedList.push("7");
 console.log(dblLinkedList.get(2));
 console.log(dblLinkedList.get(5));
-console.log(dblLinkedList.set(5, "yay"));
+console.log(dblLinkedList.insert(5, "yay"));
 console.log(dblLinkedList);
