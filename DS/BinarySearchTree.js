@@ -71,12 +71,85 @@ class BST {
       }
     }
   }
+
+  /**
+   * Breadth First Search
+   * @returns {Array} data value array
+   */
+  BFS() {
+    const data = [];
+    const queue = [];
+    let node = this.root;
+    queue.push(node);
+    while (queue.length) {
+      node = queue.shift();
+      data.push(node.val);
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+    return data;
+  }
+  /**
+   * Depth First Search Pre-Order
+   * @returns {Array} data value array
+   */
+  DfsPreOrder() {
+    const data = [];
+    //starting point for traverse
+    let current = this.root;
+
+    function traverse(node) {
+      data.push(node.val);
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+    }
+    traverse(current);
+    return data;
+  }
+  /**
+   * Depth First Search Post-Order
+   * @returns {Array} data value array
+   */
+  DfsPostOrder() {
+    const data = [];
+    //starting point for traverse
+    let current = this.root;
+
+    function traverse(node) {
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+      data.push(node.val);
+    }
+    traverse(current);
+    return data;
+  }
+
+  /**
+   * Depth First Search In-Order
+   * @returns {Array} data value array
+   */
+  DfsInOrder() {
+    const data = [];
+    //starting point for traverse
+    let current = this.root;
+
+    function traverse(node) {
+      if (node.left) traverse(node.left);
+      data.push(node.val);
+      if (node.right) traverse(node.right);
+    }
+    traverse(current);
+    return data;
+  }
 }
 
 const bs = new BST();
-bs.insert(50);
-bs.insert(25);
-bs.insert(40);
-bs.insert(60);
-bs.insert(70);
-bs.insert(65);
+bs.insert(10);
+bs.insert(6);
+bs.insert(15);
+bs.insert(3);
+bs.insert(8);
+bs.insert(20);
+console.log(bs.DfsPreOrder());
+console.log(bs.DfsPostOrder());
+console.log(bs.DfsInOrder());
